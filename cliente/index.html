@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Notas</title>
+  </head>
+  <body>
+    <h4>Notas</h4>
+    <form id="formNotas">
+      <div>
+        <label for="titulo">Titulo</label>
+        <input type="text" name="titulo" id="titulo" />
+      </div>
+      <div>
+        <label for="titulo">Nota</label>
+        <input type="text" name="nota" id="nota" />
+      </div>
+    </form>
+    <div>
+      <button type="button" onclick="crearNota()">Guardar</button>
+      <button type="button" onclick="ObtenerNotas()">Obtener</button>
+    </div>
+    <script>
+      function crearNota() {
+        var form = document.getElementById("formNotas");
+        var data = new FormData(form);
+        fetch('http://notas-api.local/api/v1/notas', {
+          method: "post",
+          headers: new Headers(),
+          body: data,
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err))
+      }
+
+      function ObtenerNotas() {
+        fetch('http://notas-api.local/api/v1/notas', {
+          method: 'get',
+          headers: new Headers(),
+        })
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err))
+      }
+    </script>
+  </body>
+</html>
